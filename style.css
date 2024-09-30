@@ -1,0 +1,53 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    background-color: white;
+    border: 1px solid #333;
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: #e0e0e0;
+}
+
+#restartButton {
+    margin-top: 20px;
+    padding: 5px;
+    background-color: rgb(145, 187, 224);
+    font-size: 20px;
+    color:#282626;
+    border: 1px solid black;
+    font-weight: lighter;
+    border-radius: 4px;
+}
+
+.textwin {
+    color: green;
+    font-weight: bolder;
+    margin-top: 30px;
+    font-size: 50px;
+}
