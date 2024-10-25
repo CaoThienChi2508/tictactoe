@@ -18,13 +18,13 @@ const winningConditions = [
 ];
 
 function createBoard() {
-    boardElement.innerHTML = ''; // Xóa nội dung hiện có
+    boardElement.innerHTML = ''; 
     board.forEach((cell, index) => {
         const cellElement = document.createElement('div');
-        cellElement.classList.add('cell'); // Thêm lớp CSS
-        cellElement.textContent = cell; // Hiển thị nội dung của ô
+        cellElement.classList.add('cell');
+        cellElement.textContent = cell; 
         cellElement.addEventListener('click', () => handleCellClick(index)); // Gán sự kiện click
-        boardElement.appendChild(cellElement); // Thêm ô vào bảng
+        boardElement.appendChild(cellElement); 
     });
 }
 
@@ -43,7 +43,7 @@ function handleCellClick(index) {
         currentPlayer = 'O'; // Đổi lượt cho AI
         aiMove();
     }
-    createBoard(); // Tạo lại bảng
+    createBoard(); 
 }
 
 function aiMove() {
@@ -76,8 +76,9 @@ function checkWinner() {
 function minimax(currentBoard, player) {
     const availableSpots = currentBoard.map((cell, index) => cell === '' ? index : null).filter(val => val !== null);
 
+    // Kiểm tra người thắng và trả về điểm số tương ứng
     if (checkWinner()) {
-        return { score: player === 'O' ? 10 : -10 }; // Điểm cho O và X
+        return { score: player === 'O' ? -1 : 1 }; // O thắng: -1, X thắng: 1
     } else if (availableSpots.length === 0) {
         return { score: 0 }; // Hòa
     }
@@ -86,23 +87,23 @@ function minimax(currentBoard, player) {
     availableSpots.forEach(spot => {
         const move = {};
         move.index = spot;
-        currentBoard[spot] = player;
+        currentBoard[spot] = player; // Đặt nước đi
 
         // Kiểm tra người thắng sau khi đặt quân
         if (checkWinner()) {
-            move.score = player === 'O' ? 10 : -10;
+            move.score = player === 'X' ? 1 : -1; // Gán điểm khi thắng
         } else {
-            const result = minimax(currentBoard, player === 'O' ? 'X' : 'O');
+            const result = minimax(currentBoard, player === 'X' ? 'O' : 'X'); // Gọi đệ quy cho người chơi khác
             move.score = result.score;
         }
 
-        currentBoard[spot] = ''; // Undo the move
+        currentBoard[spot] = ''; // Hoàn tác nước đi
         moves.push(move);
     });
 
     let bestMove;
-    if (player === 'O') {
-        let bestScore = -Infinity;
+    if (player === 'X') {
+        let bestScore = -Infinity; // X sẽ tìm điểm tối đa
         moves.forEach(move => {
             if (move.score > bestScore) {
                 bestScore = move.score;
@@ -110,7 +111,7 @@ function minimax(currentBoard, player) {
             }
         });
     } else {
-        let bestScore = Infinity;
+        let bestScore = Infinity; // O sẽ tìm điểm tối thiểu
         moves.forEach(move => {
             if (move.score < bestScore) {
                 bestScore = move.score;
@@ -120,13 +121,13 @@ function minimax(currentBoard, player) {
     }
     return bestMove;
 }
-
 restartButton.addEventListener('click', () => {
     board = ['', '', '', '', '', '', '', '', ''];
-    currentPlayer = 'X';
+    currentPlayer = 'X'; // Bắt đầu với người chơi X
     isGameActive = true;
     statusElement.textContent = '';
-    createBoard();
+    createBoard(); // Khởi tạo bảng
 });
 
-createBoard(); // Khởi tạo bảng ngay từ đầu
+// Khởi tạo bảng ngay từ đầu
+createBoard();
